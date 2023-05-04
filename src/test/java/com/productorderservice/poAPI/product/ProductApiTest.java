@@ -5,53 +5,35 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 public class ProductApiTest extends ApiTest {
 
-//    @Autowired
-//    private ProductService productService;
-//
 
-//    @BeforeEach
-//    void setUp(){
-//        productRepository=new ProductRepository();
-//        productPort=new ProductAdapter(productRepository);
-//        productService=new ProductService(productPort);
-//    }
     @Test
     void 상품등록() {
 
-        final AddProductRequest request = 상품등록요청_생성();
+        final var request = ProductSteps.상품등록요청_생성();
 
         //API요청
 
-        final ExtractableResponse<Response> response=상품등록요청(request);
+        final var response= ProductSteps.상품등록요청(request);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
-    private static ExtractableResponse<Response> 상품등록요청(final AddProductRequest request){
-        return RestAssured.given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(request)
-                .when()
-                .post("/products")
-                .then()
-                .log().all().extract();
+
+    @Test
+    void 상품조회(){
+        ProductSteps.상품등록요청(ProductSteps.상품등록요청_생성());
+        Long productId=1L;
+        final var response=ProductSteps.상품조회요청(productId);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.jsonPath().getString("name")).isEqualTo("상품명");
     }
-        private static AddProductRequest 상품등록요청_생성() {
-            final String name = "상품명";
-            final int price = 1000;
-            final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
-            final AddProductRequest request = new AddProductRequest(name, price, discountPolicy);
-            return request;
-        }
 
 
 
