@@ -1,5 +1,5 @@
 package com.productorderservice.poAPI.product;
 
-enum DiscountPolicy {
+public enum DiscountPolicy {
     NONE
 }
