@@ -16,4 +16,33 @@ public class ProductTest {
         assertThat(product.getPrice()).isEqualTo(2000);
 
     }
+
+    @Test
+    void none_discounted_product(){
+        final int price=1000;
+        final int discountedPrice=DiscountPolicy.NONE.applyDiscount(price);
+
+
+        assertThat(discountedPrice).isEqualTo(1000);
+
+    }
+
+    @Test
+    void fix_1000_discounted_product(){
+        final int price=2000;
+        final int discountedPrice=DiscountPolicy.FIX_1000_AMOUNT.applyDiscount(price);
+
+
+        assertThat(discountedPrice).isEqualTo(1000);
+
+    }
+    @Test
+    void over_1000_discounted_product(){
+        final int price=500;
+        final int discountedPrice=DiscountPolicy.FIX_1000_AMOUNT.applyDiscount(price);
+
+
+        assertThat(discountedPrice).isEqualTo(0);
+
+    }
 }

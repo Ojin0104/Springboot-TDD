@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="orders")
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Getter
-class Order {
+public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -30,4 +30,7 @@ class Order {
     }
 
 
+    public int getTotalPrice() {
+        return product.getDiscountedPrice()*quantity;
+    }
 }
