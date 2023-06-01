@@ -1,19 +1,29 @@
 package com.productorderservice.poAPI.payment;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.productorderservice.poAPI.order.Order;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
+import javax.persistence.*;
+
+@Entity
+@Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 class Payment {
-    private Order order;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    private Order order;
+
     private String cardNumber;
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
+    public int getPrice(){
+        return this.order.getTotalPrice();
     }
 
     public Long getId() {
@@ -31,9 +41,6 @@ class Payment {
         this.id = id;
     }
 
-    public int getPrice() {
-        return order.getTotalPrice();
-    }
 
 
 }

@@ -1,31 +1,32 @@
 package com.productorderservice.poAPI.payment;
 
-import com.productorderservice.poAPI.order.OrderService;
+import com.productorderservice.poAPI.ApiTest;
 import com.productorderservice.poAPI.order.OrderSteps;
-import com.productorderservice.poAPI.product.ProductService;
 import com.productorderservice.poAPI.product.ProductSteps;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
-@SpringBootTest
-public class PaymentServiceTest {
 
-    @Autowired
-    private PaymentService paymentService;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private OrderService orderService;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+
+public class PaymentApiTest extends ApiTest {
+
 
     @Test
     void 상품주문(){
-        productService.addProduct(ProductSteps.상품등록요청_생성());
-        orderService.createOrder(OrderSteps.상품주문요청_생성());
+        ProductSteps.상품등록요청(ProductSteps.상품등록요청_생성());
+        OrderSteps.상품주문요청(OrderSteps.상품주문요청_생성());
         final PaymentRequest request=PaymentSteps.주문결제요청_생성();
 
-        paymentService.payment(request);
+         final ExtractableResponse<Response> response= PaymentSteps.주문결제요청(request);
+
+         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
+
+
 
 
 
