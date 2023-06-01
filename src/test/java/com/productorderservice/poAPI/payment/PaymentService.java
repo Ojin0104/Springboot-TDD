@@ -1,13 +1,14 @@
 package com.productorderservice.poAPI.payment;
 
 import com.productorderservice.poAPI.order.Order;
+import org.springframework.stereotype.Component;
 
+@Component
 class PaymentService {
-    private final PaymentServiceTest paymentServiceTest;
+
     private PaymentPort paymentPort;
 
-    PaymentService(PaymentServiceTest paymentServiceTest, final PaymentPort paymentPort) {
-        this.paymentServiceTest = paymentServiceTest;
+    PaymentService(final PaymentPort paymentPort) {
         this.paymentPort = paymentPort;
     }
 

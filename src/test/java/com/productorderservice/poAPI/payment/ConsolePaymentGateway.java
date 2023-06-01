@@ -1,5 +1,8 @@
 package com.productorderservice.poAPI.payment;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ConsolePaymentGateway implements PaymentGateway {
 
 

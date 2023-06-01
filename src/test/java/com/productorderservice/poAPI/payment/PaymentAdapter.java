@@ -3,7 +3,9 @@ package com.productorderservice.poAPI.payment;
 import com.productorderservice.poAPI.order.Order;
 import com.productorderservice.poAPI.product.DiscountPolicy;
 import com.productorderservice.poAPI.product.Product;
+import org.springframework.stereotype.Component;
 
+@Component
 class PaymentAdapter implements PaymentPort {
 
     private final PaymentGateway paymentGateway;
